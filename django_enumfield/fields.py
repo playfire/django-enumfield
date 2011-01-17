@@ -4,9 +4,10 @@ class EnumField(models.Field):
     __metaclass__ = models.SubfieldBase
 
     def __init__(self, enumeration, *args, **kwargs):
-        kwargs.setdefault('choices', enumeration.get_choices())
-        super(EnumField, self).__init__(*args, **kwargs)
         self.enumeration = enumeration
+        kwargs.setdefault('choices', enumeration.get_choices())
+
+        super(EnumField, self).__init__(*args, **kwargs)
 
     def get_internal_type(self):
         return 'IntegerField'
@@ -31,4 +32,4 @@ class EnumField(models.Field):
         elif lookup_type == 'isnull':
             return []
 
-        raise TypeError('Lookup type %r not supported.' % lookup_type)
+        raise TypeError("Lookup type %r not supported." % lookup_type)

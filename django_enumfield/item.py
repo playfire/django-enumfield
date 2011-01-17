@@ -1,15 +1,15 @@
 class Item(object):
     def __init__(self, value, slug, display=None):
         if not isinstance(value, int):
-            raise TypeError('item value should be an integer, not %r' \
+            raise TypeError("item value should be an integer, not %r" \
                 % type(value))
 
         if not isinstance(slug, str):
-            raise TypeError('item slug should be a string, not %r' \
+            raise TypeError("item slug should be a string, not %r" \
                 % type(slug))
 
         if display != None and not isinstance(display, (basestring)):
-            raise TypeError('item display name should be a basestring, not %r' \
+            raise TypeError("item display name should be a basestring, not %r" \
                 % type(display))
 
         super(Item, self).__init__()
@@ -26,12 +26,12 @@ class Item(object):
         return self.__unicode__()
 
     def __unicode__(self):
-        # This is not pretty, but it makes the django admin work right when it
+        # This is not pretty, but it makes the Django admin work right when it
         # renders a select box
         return self.slug
 
     def __repr__(self):
-        return u'<enum.Item: %d %s %r>' % (self.value, self.slug, self.display)
+        return u"<enum.Item: %d %s %r>" % (self.value, self.slug, self.display)
 
     def __hash__(self):
         return self.value

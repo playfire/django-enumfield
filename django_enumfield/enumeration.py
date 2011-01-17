@@ -10,12 +10,13 @@ class EnumerationMeta(type):
             if isinstance(item, Item):
                 if item.value in used_values:
                     raise ValueError(
-                        'Item value %d has been used more than once (%s)' % \
-                            (item.value, item))
+                        "Item value %d has been used more than once (%s)" % \
+                            (item.value, item)
+                    )
                 used_values.add(item.value)
                 if item.slug in used_slugs:
                     raise ValueError(
-                        'Item slug "%s" has been used more than once' % item.slug
+                        "Item slug "%s" has been used more than once" % item.slug
                     )
                 used_slugs.add(item.slug)
 
@@ -32,16 +33,19 @@ class EnumerationMeta(type):
             'sorted_items': items,
             'items_by_val': by_val,
             'items_by_slug': by_slug,
-            }
+        }
 
         for k in specials.keys():
-            assert k not in attrs, '"%s" is a forbidden Item name' % k
+            assert k not in attrs, "%r is a forbidden Item name" % k
+
         attrs.update(specials)
 
         init_class = attrs.pop('init_class', None)
         cls = super(EnumerationMeta, mcs).__new__(mcs, name, bases, attrs)
+
         if init_class:
             init_class(cls)
+
         return cls
 
     def init_class(mcs):
@@ -89,4 +93,4 @@ class Enumeration(object):
         if item:
             return item
 
-        raise ValueError, '%s is not a valid value for the enumeration' % value
+        raise ValueError, "%s is not a valid value for the enumeration" % value
