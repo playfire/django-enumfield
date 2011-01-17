@@ -16,7 +16,7 @@ class EnumerationMeta(type):
                 used_values.add(item.value)
                 if item.slug in used_slugs:
                     raise ValueError(
-                        "Item slug "%s" has been used more than once" % item.slug
+                        "Item slug %r has been used more than once" % item.slug
                     )
                 used_slugs.add(item.slug)
 
