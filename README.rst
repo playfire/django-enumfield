@@ -1,4 +1,0 @@
-django-enumfield
-================
-
-FIXME
