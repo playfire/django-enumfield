@@ -16,6 +16,8 @@ class EnumField(models.Field):
         return self.enumeration.to_item(value)
 
     def get_db_prep_save(self, value, connection=None):
+        if value is None:
+            return value
         return self.to_python(value).value
 
     def get_db_prep_lookup(self, lookup_type, value, connection=None, prepared=False):
