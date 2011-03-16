@@ -33,3 +33,8 @@ class EnumField(models.Field):
             return []
 
         raise TypeError("Lookup type %r not supported." % lookup_type)
+
+    def south_field_triple(self):
+        from south.modelsinspector import introspector
+        args, kwargs = introspector(self)
+        return ('django.db.models.fields.Integerfield', args, kwargs)
