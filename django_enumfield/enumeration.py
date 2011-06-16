@@ -62,11 +62,21 @@ class Enumeration(object):
 
     @classmethod
     def from_value(cls, value):
-        return cls.items_by_val.get(value)
+        try:
+            return cls.items_by_val[value]
+        except KeyError:
+            raise ValueError(
+                "%r is not a valid value for the enumeration" % value
+            )
 
     @classmethod
     def from_slug(cls, slug):
-        return cls.items_by_slug.get(slug)
+        try:
+            return cls.items_by_slug[slug]
+        except KeyError:
+            raise ValueError(
+                "%r is not a valid slug for the enumeration" % slug
+            )
 
     @classmethod
     def get_items(cls):
