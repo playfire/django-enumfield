@@ -6,6 +6,11 @@ class EnumerationMeta(type):
         used_slugs = set()
         items = []
 
+        # Inherit items from parent classes
+        for base in bases:
+            if hasattr(base, 'items'):
+                items.extend(base.items.items())
+
         for n, item in list(attrs.items()):
             if isinstance(item, Item):
                 if item.value in used_values:
