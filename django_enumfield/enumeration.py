@@ -27,7 +27,7 @@ class EnumerationMeta(type):
 
                 items.append((n, item))
 
-        items.sort(key=lambda i: i[1].display)
+        items.sort(key=lambda i: i[1].creation_counter)
         item_objects = [i[1] for i in items]
 
         by_val = dict((i.value, i) for i in item_objects)

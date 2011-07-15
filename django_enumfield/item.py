@@ -1,4 +1,11 @@
+class ItemMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        mcs.creation_counter = 0
+        return super(ItemMeta, mcs).__new__(mcs, name, bases, attrs)
+
 class Item(object):
+    __metaclass__ = ItemMeta
+
     def __init__(self, value, slug, display=None):
         if not isinstance(value, int):
             raise TypeError("item value should be an integer, not %r" \
@@ -21,6 +28,9 @@ class Item(object):
             self.display = slug.capitalize()
         else:
             self.display = display
+
+        self.creation_counter = Item.creation_counter
+        Item.creation_counter += 1
 
     def __str__(self):
         return self.__unicode__()
