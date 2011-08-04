@@ -37,4 +37,4 @@ class EnumField(models.Field):
     def south_field_triple(self):
         from south.modelsinspector import introspector
         args, kwargs = introspector(self)
-        return ('django.db.models.fields.Integerfield', args, kwargs)
+        return ('django.db.models.fields.IntegerField', args, kwargs)
