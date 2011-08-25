@@ -117,6 +117,19 @@ def make_enum(name, *items):
         Item(20, 'email'),
     )
     """
+    # Technically we only need one seen set because values are ints
+    # and slugs are strings, but explicit is better than implicit.
+    seen_slugs = set()
+    seen_values = set()
+    for i in items:
+        if i.slug in seen_slugs:
+            raise Exception("The slug '%s' is not unique" % i.slug)
+        if i.value in seen_values:
+            raise Exception("The value %s is not unique" % i.value)
+
+        seen_slugs.add(i.slug)
+        seen_values.add(i.value)
+
     attrs = dict((i.slug.upper(), i) for i in items)
     attrs.update(
         items=items,
