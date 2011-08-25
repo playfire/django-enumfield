@@ -62,9 +62,7 @@ class EnumerationMeta(type):
     def __getitem__(mcs, prop):
         return mcs.items[prop]
 
-class Enumeration(object):
-    __metaclass__ = EnumerationMeta
-
+class EnumerationBase(object):
     @classmethod
     def from_value(cls, value):
         try:
@@ -109,3 +107,24 @@ class Enumeration(object):
             return item
 
         raise ValueError, "%s is not a valid value for the enumeration" % value
+
+def make_enum(name, *items):
+    """
+    Returns an enumeration type compatible with Enumeration. Example:
+
+    >>> FunnelStageEnum = make_enum('FunnelStageEnum',
+        Item(10, 'landing'),
+        Item(20, 'email'),
+    )
+    """
+    attrs = dict((i.slug.upper(), i) for i in items)
+    attrs.update(
+        items=items,
+        sorted_items=items,
+        items_by_val=dict((i.value, i) for i in items),
+        items_by_slug=dict((i.slug, i) for i in items),
+    )
+    return type(name, (EnumerationBase, ), attrs)
+
+class Enumeration(EnumerationBase):
+    __metaclass__ = EnumerationMeta
