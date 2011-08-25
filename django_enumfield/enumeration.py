@@ -83,7 +83,7 @@ class EnumerationBase(object):
 
     @classmethod
     def get_items(cls):
-        return [i for n, i in cls]
+        return [x[1] for x in cls.sorted_items]
 
     @classmethod
     def get_choices(cls):
@@ -132,8 +132,8 @@ def make_enum(name, *items):
 
     attrs = dict((i.slug.upper(), i) for i in items)
     attrs.update(
-        items=items,
-        sorted_items=items,
+        items=dict(attrs),
+        sorted_items=attrs.items(),
         items_by_val=dict((i.value, i) for i in items),
         items_by_slug=dict((i.slug, i) for i in items),
     )
