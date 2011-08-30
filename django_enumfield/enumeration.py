@@ -133,7 +133,7 @@ def make_enum(name, *items):
     attrs = dict((i.slug.upper(), i) for i in items)
     attrs.update(
         items=dict(attrs),
-        sorted_items=attrs.items(),
+        sorted_items=list((i.slug.upper(), i) for i in items),
         items_by_val=dict((i.value, i) for i in items),
         items_by_slug=dict((i.slug, i) for i in items),
     )
