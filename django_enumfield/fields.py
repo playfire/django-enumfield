@@ -41,6 +41,6 @@ class EnumField(models.Field):
         # repr(Item) is not only invalid as an lookup value, it actually causes
         # South to generate invalid Python
         if self.default != NOT_PROVIDED:
-            kwargs['default'] = repr(self.default.slug)
+            kwargs['default'] = self.default.value
 
         return ('django.db.models.fields.IntegerField', args, kwargs)
