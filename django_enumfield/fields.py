@@ -44,3 +44,7 @@ class EnumField(models.Field):
             kwargs['default'] = self.default.value
 
         return ('django.db.models.fields.IntegerField', args, kwargs)
+
+    def value_to_string(self, obj):
+        item = self._get_val_from_obj(obj)
+        return str(item.value)
