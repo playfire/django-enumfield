@@ -57,7 +57,7 @@ class EnumerationMeta(type):
         pass
 
     def __iter__(mcs):
-        return (key_val for key_val in mcs.sorted_items)
+        return iter(mcs.get_items())
 
     def __getitem__(mcs, prop):
         return mcs.items[prop]
