@@ -108,6 +108,9 @@ class EnumerationBase(object):
 
         raise ValueError, "%s is not a valid value for the enumeration" % value
 
+class Enumeration(EnumerationBase):
+    __metaclass__ = EnumerationMeta
+
 def make_enum(name, *items):
     """
     Returns an enumeration type compatible with Enumeration. Example:
@@ -117,27 +120,10 @@ def make_enum(name, *items):
         Item(20, 'email'),
     )
     """
-    # Technically we only need one seen set because values are ints
-    # and slugs are strings, but explicit is better than implicit.
-    seen_slugs = set()
-    seen_values = set()
-    for i in items:
-        if i.slug in seen_slugs:
-            raise Exception("The slug '%s' is not unique" % i.slug)
-        if i.value in seen_values:
-            raise Exception("The value %s is not unique" % i.value)
 
-        seen_slugs.add(i.slug)
-        seen_values.add(i.value)
-
-    attrs = dict((i.slug.upper(), i) for i in items)
-    attrs.update(
-        items=dict(attrs),
-        sorted_items=list((i.slug.upper(), i) for i in items),
-        items_by_val=dict((i.value, i) for i in items),
-        items_by_slug=dict((i.slug, i) for i in items),
+    return type(
+        name,
+        (Enumeration,),
+        dict((i.slug.upper(), i) for i in items),
     )
-    return type(name, (EnumerationBase, ), attrs)
 
-class Enumeration(EnumerationBase):
-    __metaclass__ = EnumerationMeta
