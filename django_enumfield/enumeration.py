@@ -97,11 +97,16 @@ class EnumerationBase(object):
         if isinstance(value, Item):
             return value
 
+        item = None
+
         try:
             value = int(value)
             item = cls.from_value(value)
         except ValueError:
-            item = cls.from_slug(value)
+            try:
+                item = cls.from_slug(value)
+            except ValueError:
+                pass
 
         if item:
             return item
