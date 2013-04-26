@@ -111,7 +111,9 @@ class EnumerationBase(object):
         if item:
             return item
 
-        raise ValueError, "%s is not a valid value for the enumeration" % value
+        raise ValueError(
+            "%r is not a valid slug or value for the enumeration" % value
+        )
 
 class Enumeration(EnumerationBase):
     __metaclass__ = EnumerationMeta
